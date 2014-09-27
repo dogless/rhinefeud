@@ -25,13 +25,13 @@
         var menu_state = {
             preload: function(){
                 this.game.load.image('home_character', '{% static 'assets/homepagealfred.png' %}');
-                this.game.load.image('start_button', '{% static 'assets/playbutton.png' %}');
+                this.game.load.spritesheet('start_button', '{% static 'assets/playbox.png' %}', 333, 154);
             },
 
             create: function(){
                 var home_character = this.game.add.sprite(this.game.width/2, 420, 'home_character');
                 home_character.anchor.setTo(0.5, 0.5);
-                var start_button = this.game.add.button(this.game.width/2, 930, 'start_button', this.startClick, this);
+                var start_button = this.game.add.button(this.game.width/2, 930, 'start_button', this.startClick, this, 0, 1);
                 start_button.anchor.setTo(0.5, 0.5);
                 this.game.stage.backgroundColor = '#66bda6';
             },

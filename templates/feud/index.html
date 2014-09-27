@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html>
-	<head>
-		<title>
-			Feud
-		</title>
-		<script type="text/javascript" src="{% static "js/phaser.min.js" %}"></script>
-	</head>
-	<body>
-		Hello World
-	</body>
+    <head>
+        <title>
+            Feud
+        </title>
+        <script type="text/javascript" src="{% static "js/phaser.min.js" %}"></script>
+    </head>
+    <body>
+        <div id='screen'>
+        </div>
+    </body>
+    <script>
+        var menu = {
+            preload: function(){
+                this.game.load.image('einstein', '{% static 'assets/einstein.jpg' %}');
+                this.game.load.image('startButton', '{% static 'assets/einstein.jpg' %}');
+            },
+
+            create: function(){
+                this.game.add.sprite(0,0, 'einstein');
+                this.startButton = this.game.add.button(this.game.width/2, this.game.height/2, 'startButton', this.startClick, this);
+                this.startButton.anchor.setTo(0.5, 0.5);
+            },
+
+            startClick: function(){
+                this.game.state.start('play');
+            },
+
+            update: function(){
+
+            }
+        }
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'screen', menu);
+
+    </script>
 </html>

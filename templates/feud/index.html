@@ -40,11 +40,26 @@
                 
             }
         };
+
+        var game_state = {
+            
+            init: function(game_dict) {
+                this.game_dict = game_dict;
+            },
+
+            create: function() {
+                alert(this.game_dict);
+            }
+
+
+        }
+
         var game = new Phaser.Game(1680, 1050, Phaser.AUTO, 'screen');
 
         game.state.add('menu_state', menu_state);
         game.state.add('category_state', category_state);
         game.state.start('menu_state');
+        game.state.add('game', game_state);
 
     </script>
 </html>

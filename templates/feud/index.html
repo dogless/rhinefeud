@@ -14,19 +14,19 @@
     <script>
         var menu_state = {
             preload: function(){
-                this.game.load.image('home_character', '{% static 'assets/feudhomecharacter.png' %}');
-                this.game.load.image('start_button', '{% static 'assets/feudplaybutton.png' %}');
+                this.game.load.image('home_character', '{% static 'assets/homepagealfred.png' %}');
+                this.game.load.image('start_button', '{% static 'assets/playbutton.png' %}');
             },
 
             create: function(){
-                var home_character = this.game.add.sprite(this.game.width/2, 450, 'home_character');
+                var home_character = this.game.add.sprite(this.game.width/2, 420, 'home_character');
                 home_character.anchor.setTo(0.5, 0.5);
-                var start_button = this.game.add.button(this.game.width/2, 800, 'start_button', this.startClick, this);
+                var start_button = this.game.add.button(this.game.width/2, 930, 'start_button', this.startClick, this);
                 start_button.anchor.setTo(0.5, 0.5);
                 this.game.stage.backgroundColor = '#66bda6';
             },
 
-            startClick: function(){
+            startClick: function(variable){
                 this.game.state.start('category_state');
             },
 
@@ -34,10 +34,33 @@
 
         var category_state = {
             preload: function(){
+                this.game.load.image('select_game_mode', '{% static 'assets/selectagamemode.png' %}');
+                this.game.load.image('single_player', '{% static 'assets/singleplayer.png' %}');
+                this.game.load.image('multiplayer', '{% static 'assets/multiplayer.png' %}');
+                this.game.load.image('select_category', '{% static 'assets/selectacategory.png' %}');
+                this.game.load.image('bar', '{% static 'assets/yellowverticalbar.png' %}');
+                this.game.load.image('pop_music', '{% static 'assets/popmusic.png' %}');
+                this.game.load.image('wall_street', '{% static 'assets/wallstreet.png' %}');
+                this.game.load.image('farm', '{% static 'assets/farm.png' %}');
+                this.game.load.image('superheroes', '{% static 'assets/superheroes.png' %}');
             },
             
             create: function(){
-                
+                this.game.add.sprite(25, 0, 'select_game_mode');
+                this.game.add.sprite(220, 301, 'single_player');
+                this.game.add.sprite(26, 730, 'multiplayer');
+                this.game.add.sprite(985, 0, 'select_category');
+                this.game.add.sprite(958, this.game.height/2, 'bar').anchor.setTo(0.5, 0.5);
+                this.game.stage.backgroundColor = '#d53243';
+
+                this.game.add.button(990, 350, 'pop_music', function(){this.category_click('Pop Music');}, this);
+                this.game.add.button(990, 450, 'wall_street', function(){this.category_click('Wall Street');}, this);
+                this.game.add.button(990, 550, 'farm', function(){this.category_click('Farm');}, this);
+                this.game.add.button(990, 650, 'superheroes', function(){this.category_click('Super Heroes');}, this);
+            },
+
+            category_click: function(category){
+                this.game.state.start('game_state', true, false, category);
             }
         };
 

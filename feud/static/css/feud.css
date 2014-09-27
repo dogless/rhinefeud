@@ -1,7 +1,7 @@
 #input {
     position: absolute;
     left: 48px;
-    top: 832px;
+    top: 835px;
     width: 608px;
     height: 68px;
     border-width: 5px;
@@ -12,6 +12,7 @@
     text-transform: uppercase;
     z-index: 1;
     display: none;
+    outline-width: 0;
 }
 
 #screen {

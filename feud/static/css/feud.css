@@ -1,6 +1,8 @@
 #input {
     position: absolute;
-    width: 620px;
+    left: 48px;
+    top: 832px;
+    width: 608px;
     height: 68px;
     border-width: 5px;
     border-color: transparent;
@@ -9,6 +11,7 @@
     font-family: Bazar;
     text-transform: uppercase;
     z-index: 1;
+    display: none;
 }
 
 #screen {

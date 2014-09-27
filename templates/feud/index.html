@@ -129,6 +129,9 @@
 
                 var tween_input_box = this.add.tween(input_box);
                 tween_input_box.to({x: 350, y: 905}, 1000, Phaser.Easing.Bounce.Out, false, 600);
+                tween_input_box.onComplete.add(function () {
+                    $('#input').show();
+                });
                 tween_input_box.start();
 
                 // timer setup

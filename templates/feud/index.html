@@ -26,7 +26,7 @@
                 this.game.stage.backgroundColor = '#66bda6';
             },
 
-            startClick: function(variable){
+            startClick: function(){
                 this.game.state.start('category_state');
             },
 
@@ -66,14 +66,71 @@
 
         var game_state = {
             
-            init: function(game_dict) {
-                this.game_dict = game_dict;
+            init: function(category) {
+                this.category = category;
+            },
+
+            preload: function() {
+                this.game.load.image('alfred', '{% static 'assets/alfredwithtextbubble.png' %}');
+                this.game.load.image('input_box', '{% static 'assets/typeinbox.png' %}');
+                this.game.load.image('banner', '{% static 'assets/banner.png'%}');
             },
 
             create: function() {
-                alert(this.game_dict);
-            }
+                var x_middle = this.game.width/2;
+                var y_middle = this.game.length/2;
+                var banner = this.game.add.sprite(x_middle, 115, 'banner');
+                banner.anchor.setTo(0.5, 0.5);
+                var alfred = this.game.add.sprite(x_middle + 500, 650, 'alfred');
+                alfred.anchor.setTo(0.5, 0.5);
+                var input_box = this.game.add.sprite(350, 905, 'input_box');
+                input_box.anchor.setTo(0.5, 0.5);
 
+
+                x_clock_old = this.game.world.centerX - 80;
+                x_clock = this.game.world.centerX - 40;
+                y_clock = this.game.world.centerY - 200;
+                this.text = "Hello World";
+                this.style = { font: "65px Arial", align: "center"};
+                this.time_field = this.game.add.text(x_clock, y_clock, this.text, this.style);
+                this.pre_timer();
+                this.start_timer();
+
+            },
+
+            pre_timer: function() {
+                //
+            },
+
+            start_timer: function() {
+                var y_clock_frame = this.game.world.centerY - 165;
+                this.game.stage.backgroundColor = '#d53243';
+                this.timer = game.time.create(false);
+                this.timer.loop(12000, this.round_end, this);
+                this.timer.start();
+                
+                this.circles = this.game.add.graphics(this.game.world.centerX, y_clock_frame);
+                this.circles.lineStyle(10, 0x00000, 1);
+                this.circles.drawCircle(0, 0, 75);
+            },
+
+            round_end: function() {
+                this.total++;
+            },
+
+            render: function() {
+                this.time_field.x = x_clock;
+                // game.debug.text("Time until event: " + this.timer.duration.toFixed(0), 32, 32);
+                // game.debug.text("Test: " + this.timer.duration / 1000 , 32, 64);
+                var time = parseInt(this.timer.duration / 1000);
+                
+                if (time < 10) {
+                    time = (this.timer.duration/ 1000).toFixed(1);
+                    this.time_field.x = x_clock - 8;
+                }
+
+                this.time_field.text = time;
+            },
 
         }
 
@@ -82,7 +139,7 @@
         game.state.add('menu_state', menu_state);
         game.state.add('category_state', category_state);
         game.state.start('menu_state');
-        game.state.add('game', game_state);
+        game.state.add('game_state', game_state);
 
     </script>
 </html>

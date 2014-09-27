@@ -1,0 +1,5 @@
+*.DS_STORE
+*.orig
+*.pyc
+*.sw*
+venv*

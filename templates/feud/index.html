@@ -51,7 +51,7 @@
                 this.game.add.sprite(26, 730, 'multiplayer');
                 this.game.add.sprite(985, 0, 'select_category');
                 this.game.add.sprite(958, this.game.height/2, 'bar').anchor.setTo(0.5, 0.5);
-                this.game.stage.backgroundColor = '#d53243';
+                this.game.stage.backgroundColor = '#e95e6d';
 
                 this.game.add.button(990, 350, 'pop_music', function(){this.category_click('Pop Music');}, this);
                 this.game.add.button(990, 450, 'wall_street', function(){this.category_click('Wall Street');}, this);
@@ -104,7 +104,7 @@
 
             start_timer: function() {
                 var y_clock_frame = this.game.world.centerY - 165;
-                this.game.stage.backgroundColor = '#d53243';
+                this.game.stage.backgroundColor = '#e95e6d';
                 this.timer = game.time.create(false);
                 this.timer.loop(12000, this.round_end, this);
                 this.timer.start();

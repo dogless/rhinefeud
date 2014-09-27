@@ -12,27 +12,39 @@
         </div>
     </body>
     <script>
-        var menu = {
+        var menu_state = {
             preload: function(){
-                this.game.load.image('einstein', '{% static 'assets/einstein.jpg' %}');
-                this.game.load.image('startButton', '{% static 'assets/einstein.jpg' %}');
+                this.game.load.image('home_character', '{% static 'assets/feudhomecharacter.png' %}');
+                this.game.load.image('start_button', '{% static 'assets/feudplaybutton.png' %}');
             },
 
             create: function(){
-                this.game.add.sprite(0,0, 'einstein');
-                this.startButton = this.game.add.button(this.game.width/2, this.game.height/2, 'startButton', this.startClick, this);
-                this.startButton.anchor.setTo(0.5, 0.5);
+                var home_character = this.game.add.sprite(this.game.width/2, 450, 'home_character');
+                home_character.anchor.setTo(0.5, 0.5);
+                var start_button = this.game.add.button(this.game.width/2, 800, 'start_button', this.startClick, this);
+                start_button.anchor.setTo(0.5, 0.5);
+                this.game.stage.backgroundColor = '#66bda6';
             },
 
             startClick: function(){
-                this.game.state.start('play');
+                this.game.state.start('category_state');
             },
 
-            update: function(){
+        };
 
+        var category_state = {
+            preload: function(){
+            },
+            
+            create: function(){
+                
             }
-        }
-        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'screen', menu);
+        };
+        var game = new Phaser.Game(1680, 1050, Phaser.AUTO, 'screen');
+
+        game.state.add('menu_state', menu_state);
+        game.state.add('category_state', category_state);
+        game.state.start('menu_state');
 
     </script>
 </html>

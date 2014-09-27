@@ -46,17 +46,32 @@
             },
             
             create: function(){
-                this.game.add.sprite(25, 0, 'select_game_mode');
-                this.game.add.sprite(220, 301, 'single_player');
-                this.game.add.sprite(26, 730, 'multiplayer');
-                this.game.add.sprite(985, 0, 'select_category');
+                var single_player = this.game.add.sprite(-100, 301, 'single_player');
+                this.add.tween(single_player).to({x: 220, y: 301}, 1000, Phaser.Easing.Bounce.Out, true, 0, false);
+
+                var multiplayer = this.game.add.sprite(-100, 730, 'multiplayer');
+                this.add.tween(multiplayer).to({x: 26, y: 730}, 1500, Phaser.Easing.Bounce.Out, true, 0, false);
+
+                var mode = this.game.add.sprite(25, 0, 'select_game_mode');
+                this.add.tween(mode).to({x: 25, y: 20}, 1500, Phaser.Easing.Linear.None, true, 300, 1000, true);
+
+                var category = this.game.add.sprite(985, 0, 'select_category');
+                this.add.tween(category).to({x: 985, y: 20}, 1500, Phaser.Easing.Linear.None, true, 0, 1000, true);
+
                 this.game.add.sprite(958, this.game.height/2, 'bar').anchor.setTo(0.5, 0.5);
                 this.game.stage.backgroundColor = '#d53243';
 
-                this.game.add.button(990, 350, 'pop_music', function(){this.category_click('Pop Music');}, this);
-                this.game.add.button(990, 450, 'wall_street', function(){this.category_click('Wall Street');}, this);
-                this.game.add.button(990, 550, 'farm', function(){this.category_click('Farm');}, this);
-                this.game.add.button(990, 650, 'superheroes', function(){this.category_click('Super Heroes');}, this);
+                var pop_music = this.game.add.button(this.game.width, 350, 'pop_music', function(){this.category_click('Pop Music');}, this);
+                this.add.tween(pop_music).to({x:990, y:350}, 750, Phaser.Easing.Cubic.Out, true, 0, false);
+
+                var wall_street = this.game.add.button(this.game.width, 450, 'wall_street', function(){this.category_click('Wall Street');}, this);
+                this.add.tween(wall_street).to({x:990, y:450}, 750, Phaser.Easing.Cubic.Out, true, 200, false);
+
+                var farm = this.game.add.button(this.game.width, 550, 'farm', function(){this.category_click('Farm');}, this);
+                this.add.tween(farm).to({x:990, y:550}, 750, Phaser.Easing.Cubic.Out, true, 400, false);
+
+                var superheroes = this.game.add.button(this.game.width, 650, 'superheroes', function(){this.category_click('Super Heroes');}, this);
+                this.add.tween(superheroes).to({x:990, y:650}, 750, Phaser.Easing.Cubic.Out, true, 600, false);
             },
 
             category_click: function(category){

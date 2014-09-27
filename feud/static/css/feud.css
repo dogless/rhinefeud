@@ -1,0 +1,16 @@
+#input {
+    position: absolute;
+    width: 620px;
+    height: 68px;
+    border-width: 5px;
+    border-color: transparent;
+    background-color: transparent;
+    font-size: 34px;
+    font-family: Bazar;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+#screen {
+    z-index: 0;
+}

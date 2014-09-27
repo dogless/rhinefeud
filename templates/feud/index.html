@@ -6,12 +6,22 @@
             Feud
         </title>
         <script type="text/javascript" src="{% static "js/phaser.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery-2.1.1.min.js" %}"></script>
+        <style>
+            @font-face {
+                font-family: Bazar;
+                src: url("{% static "assets/Bazar.ttf" %}");
+            }   
+        </style>
+        <link rel="stylesheet" type="text/css" href="{% static "css/feud.css" %}"/>
     </head>
     <body>
-        <div id='screen'>
-        </div>
+        <input id='input' type='text'/>
+        <div id='screen'></div>
     </body>
     <script>
+        'use strict';
+
         var menu_state = {
             preload: function(){
                 this.game.load.image('home_character', '{% static 'assets/homepagealfred.png' %}');
@@ -95,7 +105,6 @@
                 this.time_field = this.game.add.text(x_clock, y_clock, this.text, this.style);
                 this.pre_timer();
                 this.start_timer();
-
             },
 
             pre_timer: function() {
@@ -138,8 +147,7 @@
 
         game.state.add('menu_state', menu_state);
         game.state.add('category_state', category_state);
-        game.state.start('menu_state');
         game.state.add('game_state', game_state);
-
+        game.state.start('menu_state');
     </script>
 </html>

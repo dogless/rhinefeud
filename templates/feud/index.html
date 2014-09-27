@@ -105,19 +105,37 @@
                 var x_middle = this.game.width/2;
                 var y_middle = this.game.length/2;
                 var banner = this.game.add.sprite(x_middle, 115, 'banner');
+                var alfred = this.game.add.sprite(x_middle + 500, 1000, 'alfred');
+                var input_box = this.game.add.sprite(-400, 905, 'input_box');
+                
+                // category title setup
+                var category_text = this.category.toUpperCase();
+                var category_text = "SUPER HERO";
+                var bazar_style = { font: "65px Bazar", fill: "#fff"};
+                var category_field = this.game.add.text(1350, 400,category_text, bazar_style);
+                
+                category_field.anchor.setTo(0.5, 0.5);
                 banner.anchor.setTo(0.5, 0.5);
-                var alfred = this.game.add.sprite(x_middle + 500, 650, 'alfred');
                 alfred.anchor.setTo(0.5, 0.5);
-                var input_box = this.game.add.sprite(350, 905, 'input_box');
                 input_box.anchor.setTo(0.5, 0.5);
 
+                
+                // animation setup
+                var tween_alfred = this.add.tween(alfred);
+                tween_alfred.to({x: x_middle + 500, y: 650}, 600, Phaser.Easing.Cubic.Out);
+                tween_alfred.start();
 
-                x_clock_old = this.game.world.centerX - 80;
-                x_clock = this.game.world.centerX - 40;
-                y_clock = this.game.world.centerY - 200;
+                var tween_input_box = this.add.tween(input_box);
+                tween_input_box.to({x: 350, y: 905}, 1000, Phaser.Easing.Bounce.Out, false, 600);
+                tween_input_box.start();
+
+                // timer setup
+                this.x_clock_old = this.game.world.centerX - 80;
+                this.x_clock = this.game.world.centerX - 40;
+                this.y_clock = this.game.world.centerY - 200;
                 this.text = "Hello World";
                 this.style = { font: "65px Arial", align: "center"};
-                this.time_field = this.game.add.text(x_clock, y_clock, this.text, this.style);
+                this.time_field = this.game.add.text(this.x_clock, this.y_clock, this.text, this.style);
                 this.pre_timer();
                 this.start_timer();
             },
@@ -143,14 +161,14 @@
             },
 
             render: function() {
-                this.time_field.x = x_clock;
+                this.time_field.x = this.x_clock;
                 // game.debug.text("Time until event: " + this.timer.duration.toFixed(0), 32, 32);
                 // game.debug.text("Test: " + this.timer.duration / 1000 , 32, 64);
                 var time = parseInt(this.timer.duration / 1000);
                 
                 if (time < 10) {
                     time = (this.timer.duration/ 1000).toFixed(1);
-                    this.time_field.x = x_clock - 8;
+                    this.time_field.x = this.x_clock - 8;
                 }
 
                 this.time_field.text = time;

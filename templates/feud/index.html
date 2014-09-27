@@ -110,20 +110,22 @@
                 
                 // category title setup
                 var category_text = this.category.toUpperCase();
-                var category_text = "SUPER HERO";
                 var bazar_style = { font: "65px Bazar", fill: "#fff"};
-                var category_field = this.game.add.text(1350, 400,category_text, bazar_style);
+                var category_field = this.game.add.text(1350, 800,category_text, bazar_style);
                 
                 category_field.anchor.setTo(0.5, 0.5);
                 banner.anchor.setTo(0.5, 0.5);
                 alfred.anchor.setTo(0.5, 0.5);
                 input_box.anchor.setTo(0.5, 0.5);
 
-                
                 // animation setup
                 var tween_alfred = this.add.tween(alfred);
                 tween_alfred.to({x: x_middle + 500, y: 650}, 600, Phaser.Easing.Cubic.Out);
                 tween_alfred.start();
+
+                var tween_category = this.add.tween(category_field);
+                tween_category.to({x: 1350, y: 400}, 600, Phaser.Easing.Cubic.Out);
+                tween_category.start();
 
                 var tween_input_box = this.add.tween(input_box);
                 tween_input_box.to({x: 350, y: 905}, 1000, Phaser.Easing.Bounce.Out, false, 600);

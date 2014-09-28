@@ -122,6 +122,7 @@
             preload: function() {
                 this.game.load.audio('wow', '{% static 'assets/wow.mp3' %}');
                 this.game.load.audio('music', '{% static 'assets/music.mp3' %}');
+                this.game.load.audio('bell', '{% static 'assets/bellsound.mp3' %}');
                 this.game.load.audio('incorrect', '{% static 'assets/incorrect.mp3' %}');
                 this.game.load.audio('correct', '{% static 'assets/correct.mp3' %}');
                 this.game.load.audio('sfx', '{% static 'assets/countdown.mp3' %}');
@@ -138,6 +139,7 @@
                 this.wow = game.add.audio('wow');
                 this.correct = game.add.audio('correct');
                 this.music = game.add.audio('music');
+                this.bell = game.add.audio('bell');
                 this.incorrect = game.add.audio('incorrect');
                 countdown_sound.play('', 0, 1, false);
                 this.countdown = true;
@@ -259,6 +261,7 @@
                 input.blur();
                 input.hide();
                 this.music.stop();
+                this.bell.play('', 0, 1, false);
                 this.game.state.start('leaderboard_state', true, false, this.score);
             },
 

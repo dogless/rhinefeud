@@ -95,6 +95,7 @@
             
             init: function(category) {
                 this.category = category;
+                this.rhine_url = 'http://api.rhine.io/sdf0b913e4b07b5243b7f527/distance/' + category + '/';
             },
 
             preload: function() {
@@ -139,13 +140,11 @@
                     var input = $('#input');
                     input.show();
                     input.keyup(function (event) {
-                        if (event.which === "\r".charCodeAt()) {
-                            var val = input.val();
-                            if (val.length){
-                                state.game.add.text(104, 312 + state.num_answers * 56, val.toUpperCase(), {font: "50px Bazar"});
-                                ++state.num_answers;
-                                input.val("");
-                            }
+                        if (event.which === "\r".charCodeAt() && input.val().length) {
+                            state.game.add.text(104, 312 + state.num_answers * 56, input.val().toUpperCase(), {font: "50px Bazar"});
+                            ++state.num_answers;
+                            state.test(state.category, input.val());
+                            input.val("");
                         }
                     });
                 });
@@ -196,6 +195,13 @@
                 this.time_field.text = time;
             },
 
+            test: function(category, word){
+                $.getJSON('/score', {'category': category, 'word':word},
+                    function(result){
+                        console.log(result['distance']);
+                    }
+                );
+            }
         }
 
         var game = new Phaser.Game(1680, 1050, Phaser.AUTO, 'screen');

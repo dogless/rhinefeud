@@ -55,10 +55,10 @@
                 this.game.load.image('multiplayer', '{% static 'assets/multiplayer.png' %}');
                 this.game.load.image('select_category', '{% static 'assets/selectacategory.png' %}');
                 this.game.load.image('bar', '{% static 'assets/yellowverticalbar.png' %}');
-                this.game.load.image('pop_music', '{% static 'assets/popmusic.png' %}');
-                this.game.load.image('wall_street', '{% static 'assets/wallstreet.png' %}');
-                this.game.load.image('farm', '{% static 'assets/farm.png' %}');
-                this.game.load.image('superheroes', '{% static 'assets/superheroes.png' %}');
+                this.game.load.spritesheet('pop_music', '{% static 'assets/popmusic.png' %}', 626, 78);
+                this.game.load.spritesheet('farm', '{% static 'assets/farm.png' %}', 626, 76);
+                this.game.load.spritesheet('wall_street', '{% static 'assets/wallstreet.png' %}', 626, 78);
+                this.game.load.spritesheet('superheroes', '{% static 'assets/superhero.png' %}', 626, 78);
             },
             
             create: function(){
@@ -77,17 +77,17 @@
                 this.game.add.sprite(958, this.game.height/2, 'bar').anchor.setTo(0.5, 0.5);
                 this.game.stage.backgroundColor = '#e95e6d';
 
-                var pop_music = this.game.add.button(this.game.width, 350, 'pop_music', function(){this.category_click('Pop Music');}, this);
-                this.add.tween(pop_music).to({x:990, y:350}, 750, Phaser.Easing.Cubic.Out, true, 0, false);
+                var pop_music = this.game.add.button(this.game.width, 350, 'pop_music', function(){this.category_click('Pop Music');}, this, 1, 0);
+                this.add.tween(pop_music).to({x:1010, y:350}, 750, Phaser.Easing.Cubic.Out, true, 0, false);
 
-                var wall_street = this.game.add.button(this.game.width, 450, 'wall_street', function(){this.category_click('Wall Street');}, this);
-                this.add.tween(wall_street).to({x:990, y:450}, 750, Phaser.Easing.Cubic.Out, true, 200, false);
+                var wall_street = this.game.add.button(this.game.width, 475, 'wall_street', function(){this.category_click('Wall Street');}, this, 0, 1);
+                this.add.tween(wall_street).to({x:1010, y:475}, 750, Phaser.Easing.Cubic.Out, true, 200, false);
 
-                var farm = this.game.add.button(this.game.width, 550, 'farm', function(){this.category_click('Farm');}, this);
-                this.add.tween(farm).to({x:990, y:550}, 750, Phaser.Easing.Cubic.Out, true, 400, false);
+                var farm = this.game.add.button(this.game.width, 600, 'farm', function(){this.category_click('Farm');}, this, 1, 0);
+                this.add.tween(farm).to({x:1010, y:600}, 750, Phaser.Easing.Cubic.Out, true, 400, false);
 
-                var superheroes = this.game.add.button(this.game.width, 650, 'superheroes', function(){this.category_click('Super Heroes');}, this);
-                this.add.tween(superheroes).to({x:990, y:650}, 750, Phaser.Easing.Cubic.Out, true, 600, false);
+                var superheroes = this.game.add.button(this.game.width, 725, 'superheroes', function(){this.category_click('Super Heroes');}, this, 1, 0);
+                this.add.tween(superheroes).to({x:1010, y:725}, 750, Phaser.Easing.Cubic.Out, true, 600, false);
             },
 
             category_click: function(category){

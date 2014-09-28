@@ -321,6 +321,7 @@
                 this.game.load.image('leaderboard_banner', '{% static 'assets/leaderboard_banner.png' %}');
                 this.game.load.image('mustache', '{% static 'assets/mustache_for_leaderboard.png' %}');
                 this.game.load.image('main_menu_button', '{% static 'assets/main_menu_button.png' %}')
+                this.game.load.spritesheet('main_menu_button', '{% static 'assets/mainmenubuttonhover.1.png' %}', 334, 110);
             },
 
             create: function() {
@@ -331,7 +332,7 @@
 
                 var mustache = this.game.add.sprite(x_middle, y_middle, 'mustache');
                 var leaderboard_banner = this.game.add.sprite(x_middle, 0, 'leaderboard_banner');
-                var main_menu_button = this.game.add.button(x_middle, 1200, 'main_menu_button', this.main_menu_click, this);
+                var main_menu_button = this.game.add.button(x_middle, 1200, 'main_menu_button', this.main_menu_click, this, 0, 1);
 
                 leaderboard_banner.anchor.setTo(0.5, 0.5);
                 mustache.anchor.setTo(0.5, 0.5);
@@ -403,7 +404,7 @@
                 tween_score_three_points.to({x: x_middle + 150 , y: 575}, 600, Phaser.Easing.Bounce.Out, false, 100);
                 tween_score_three_points.start();
 
-                tween_player_points.to({x: x_middle - 250 , y: 675}, 600, Phaser.Easing.Bounce.Out, false, 150);
+                tween_player_points.to({x: x_middle + 150 , y: 675}, 600, Phaser.Easing.Bounce.Out, false, 150);
                 tween_player_points.start();
 
                 tween_main_menu.to({x: x_middle, y: 900}, 600, Phaser.Easing.Cubic.Out);

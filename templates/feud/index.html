@@ -107,9 +107,12 @@
                 this.game.load.image('input_box', '{% static 'assets/typeinbox.png' %}');
                 this.game.load.image('banner', '{% static 'assets/banner.png'%}');
                 this.game.load.image('scoreboard', '{% static 'assets/scorebox.png' %}');
+                this.game.load.audio('sfx', '{% static 'assets/countdown.mp3' %}');
             },
 
             create: function() {
+                var countdown_sound = game.add.audio('sfx');
+                countdown_sound.play('', 0, 1, false);
                 this.countdown = true;
                 this.round_time = 26000;
                 this.countdown_style = {font : "200px Bazar"};

@@ -291,10 +291,11 @@
                             var word_x = 104;
                             var y = 312 + num_visible_answers * 56;
                             var word_line = state.game.add.text(word_x, y, word, {font: "50px Bazar"});
-                            state.answer_lines.push({
-                                word_line: word_line,
-                                point_line: state.game.add.text(point_x - word_line.context.measureText(scoreString).width, y,
-                                    scoreString, {font: "50px Bazar", align: "right"})});
+                            var point_line = state.game.add.text(point_x - word_line.context.measureText(scoreString).width, y,
+                                    scoreString, {font: "50px Bazar", align: "right"});
+                            state.answer_lines.push({word_line: word_line, point_line: point_line});
+                            state.flip(word_line);
+                            state.flip(point_line);
                         } else {
                             for (var i = 0; i < MAX_VISIBLE_ANSWERS - 1; ++i) {
                                 var answer_line = state.answer_lines[i];
@@ -308,9 +309,17 @@
                             answer_line.point_line.text = scoreString;
                             answer_line.point_line.x = point_x - answer_line.point_line.context.measureText(scoreString).width;
                             answer_line.point_line.updateText();
+                            state.flip(answer_line.word_line);
+                            state.flip(answer_line.point_line);
                         }
                     }
                 );
+            },
+
+            flip: function (sprite) {
+                var tween = this.add.tween(sprite);
+                tween.from({y: sprite.y + sprite.height, height: 0}, 250);
+                tween.start();
             },
 
             pop_up: function (sprite_name) {

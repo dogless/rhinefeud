@@ -24,6 +24,7 @@
     <script>
         //'use strict';
 
+        $(document).ready(function() {
         function sanitize(answer) {
             return answer.trim().replace(/\s+/g, " ").toUpperCase();
         }
@@ -455,5 +456,6 @@
         game.state.add('game_state', game_state);
         game.state.add('leaderboard_state', leaderboard_state);
         game.state.start('menu_state');
+        });
     </script>
 </html>

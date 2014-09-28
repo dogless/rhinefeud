@@ -132,7 +132,8 @@
                 var tween_input_box = this.add.tween(input_box);
                 tween_input_box.to({x: 350, y: 905}, 1000, Phaser.Easing.Bounce.Out, false, 600);
 
-                this.num_answers = 0;
+                var num_answers = 0;
+                var answer_set = {};
                 var MAX_ANSWERS = 9;
                 var state = this;
                 tween_input_box.onComplete.add(function () {
@@ -140,10 +141,11 @@
                     input.show();
                     input.keyup(function (event) {
                         if (event.which === "\r".charCodeAt()) {
-                            var val = input.val();
-                            if (val.length){
-                                state.game.add.text(104, 312 + state.num_answers * 56, val.toUpperCase(), {font: "50px Bazar"});
-                                ++state.num_answers;
+                            var val = input.val().toUpperCase();
+                            if (val.length && !(val in answer_set)) {
+                                answer_set[val] = true;
+                                state.game.add.text(104, 312 + num_answers * 56, val, {font: "50px Bazar"});
+                                ++num_answers;
                                 input.val("");
                             }
                         }

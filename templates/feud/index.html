@@ -73,6 +73,7 @@
                 this.game.load.spritesheet('wall_street', '{% static 'assets/wallstreet_ss.png' %}', 626, 78);
                 this.game.load.spritesheet('superheroes', '{% static 'assets/superhero.png' %}', 626, 78);
                 this.game.load.audio('lobby', '{% static 'assets/lobby.mp3' %}');
+                this.game.load.spritesheet('chips', '{% static 'assets/chipshover.1.png' %}', 626, 78);
             },
             
             create: function(){
@@ -93,17 +94,20 @@
                 this.game.add.sprite(958, this.game.height/2, 'bar').anchor.setTo(0.5, 0.5);
                 this.game.stage.backgroundColor = '#e95e6d';
 
-                var pop_music = this.game.add.button(this.game.width, 350, 'pop_music', function(){this.category_click('Pop Music');}, this, 1, 0);
-                this.add.tween(pop_music).to({x:1010, y:350}, 750, Phaser.Easing.Cubic.Out, true, 0, false);
+                var superheroes = this.game.add.button(this.game.width, 350, 'superheroes', function(){this.category_click('Super Heroes');}, this, 1, 0);
+                this.add.tween(superheroes).to({x:1010, y:350}, 750, Phaser.Easing.Cubic.Out, true, 0, false);
 
-                var wall_street = this.game.add.button(this.game.width, 475, 'wall_street', function(){this.category_click('Wall Street');}, this, 0, 1);
-                this.add.tween(wall_street).to({x:1010, y:475}, 750, Phaser.Easing.Cubic.Out, true, 200, false);
+                var farm = this.game.add.button(this.game.width, 475, 'farm', function(){this.category_click('Farm');}, this, 1, 0);
+                this.add.tween(farm).to({x:1010, y:475}, 750, Phaser.Easing.Cubic.Out, true, 200, false);
 
-                var farm = this.game.add.button(this.game.width, 600, 'farm', function(){this.category_click('Farm');}, this, 1, 0);
-                this.add.tween(farm).to({x:1010, y:600}, 750, Phaser.Easing.Cubic.Out, true, 400, false);
+                var wall_street = this.game.add.button(this.game.width, 600, 'wall_street', function(){this.category_click('Wall Street');}, this, 0, 1);
+                this.add.tween(wall_street).to({x:1010, y:600}, 750, Phaser.Easing.Cubic.Out, true, 400, false);
+                
+                var pop_music = this.game.add.button(this.game.width, 725, 'pop_music', function(){this.category_click('Pop Music');}, this, 1, 0);
+                this.add.tween(pop_music).to({x:1010, y:725}, 750, Phaser.Easing.Cubic.Out, true, 600, false);
 
-                var superheroes = this.game.add.button(this.game.width, 725, 'superheroes', function(){this.category_click('Super Heroes');}, this, 1, 0);
-                this.add.tween(superheroes).to({x:1010, y:725}, 750, Phaser.Easing.Cubic.Out, true, 600, false);
+                var chips = this.game.add.button(this.game.width, 850, 'chips', function(){this.category_click('Chips');}, this, 1, 0);
+                this.add.tween(chips).to({x:1010, y:850}, 750, Phaser.Easing.Cubic.Out, true, 800, false);
             },
 
             category_click: function(category){

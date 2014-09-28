@@ -116,6 +116,7 @@
                 this.game.load.image('input_box', '{% static 'assets/typeinbox.png' %}');
                 this.game.load.image('banner', '{% static 'assets/banner.png'%}');
                 this.game.load.image('scoreboard', '{% static 'assets/scorebox.png' %}');
+                this.game.load.image('incorrectxmark', '{% static 'assets/incorrectxmark.png' %}');
             },
 
             create: function() {
@@ -270,6 +271,18 @@
                         console.log(score);
                         if (score < 1 || score > 40) {
                             state.incorrect.play('', 0, 1, false);
+
+                            var wrong = state.game.add.sprite(state.game.world.centerX, state.game.world.centerY, 'incorrectxmark');
+                            wrong.anchor.setTo(0.5, 0.5);
+                            var wrong_appear = state.add.tween(wrong);
+                            wrong_appear.from({alpha: 0}, 500);
+                            var wrong_disappear = state.add.tween(wrong);
+                            wrong_disappear.to({alpha: 0}, 1000);
+                            wrong_disappear.onComplete.add(function () {
+                                wrong.destroy();
+                            });
+                            wrong_appear.chain(wrong_disappear).start();
+
                             return;
                         }
                         if (score > 30){

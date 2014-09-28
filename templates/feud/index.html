@@ -22,7 +22,7 @@
         <div id='screen'></div>
     </body>
     <script>
-        'use strict';
+        //'use strict';
 
         function sanitize(answer) {
             return answer.trim().replace(/\s+/g, " ").toUpperCase();
@@ -117,6 +117,7 @@
                 this.game.load.image('banner', '{% static 'assets/banner.png'%}');
                 this.game.load.image('scoreboard', '{% static 'assets/scorebox.png' %}');
                 this.game.load.image('incorrectxmark', '{% static 'assets/incorrectxmark.png' %}');
+                this.game.load.image('wow_answer', '{% static 'assets/wow.png' %}');
             },
 
             create: function() {
@@ -127,7 +128,7 @@
                 this.incorrect = game.add.audio('incorrect');
                 countdown_sound.play('', 0, 1, false);
                 this.countdown = true;
-                this.round_time = 26000;
+                this.round_time = 46000;
                 this.countdown_style = {font : "200px Bazar"};
                 this.countdown_timer(3);
             },
@@ -170,7 +171,7 @@
                 tween_input_box.onComplete.add(function () {
                     var input = $('#input');
                     input.show();
-		            input.focus();
+					input.focus();
                     input.keyup(function (event) {
                         if (event.which === "\r".charCodeAt()) {
                             var val = sanitize(input.val());
@@ -245,7 +246,7 @@
                 input.blur();
                 input.hide();
                 this.music.stop();
-                this.game.state.start('leaderboard_state', true, false);
+                this.game.state.start('leaderboard_state', true, false, this.score);
             },
 
             render: function() {
@@ -277,6 +278,7 @@
                         }
                         if (score > 30){
                             state.wow.play('', 0, 1, false);
+                            state.pop_up('wow_answer');
                         }
                         else{
                             state.correct.play('', 0, 1, false);
@@ -376,7 +378,7 @@
                 var score_one_points = "9001";
                 var score_two_points = "4329";
                 var score_three_points = "3221";
-                var player_points = this.score;
+                var player_points = this.score.toString();
 
                 var score_one_name_field = this.game.add.text(x_middle - 50, 375, score_one_name, bazar_style);
                 var score_two_name_field = this.game.add.text(x_middle - 50, 475, score_two_name, bazar_style);

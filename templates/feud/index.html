@@ -147,9 +147,9 @@
                 var tween_input_box = this.add.tween(input_box);
                 tween_input_box.to({x: 350, y: 905}, 1000, Phaser.Easing.Bounce.Out, false, 600);
 
-                var num_answers = 0;
                 var answer_set = {};
-                var MAX_ANSWERS = 9;
+                var answer_lines = [];
+                var MAX_VISIBLE_ANSWERS = 9;
                 var state = this;
                 tween_input_box.onComplete.add(function () {
                     var input = $('#input');
@@ -159,10 +159,17 @@
                         if (event.which === "\r".charCodeAt()) {
                             var val = sanitize(input.val());
                             if (val.length && !(val in answer_set)) {
+                                var num_answers = Object.keys(answer_set).length;
+                                if (num_answers < MAX_VISIBLE_ANSWERS) {
+                                    answer_lines.push(state.game.add.text(104, 312 + num_answers * 56, val, {font: "50px Bazar"}));
+                                } else {
+                                    for (var i = 0; i < MAX_VISIBLE_ANSWERS - 1; ++i) {
+                                        answer_lines[i].text = answer_lines[i + 1].text;
+                                    }
+                                    answer_lines[MAX_VISIBLE_ANSWERS - 1].text = val;
+                                }
+                                state.test(state.category, val);
                                 answer_set[val] = true;
-                                state.game.add.text(104, 312 + num_answers * 56, val, {font: "50px Bazar"});
-                                state.test(state.category, input.val());
-                                ++num_answers;
                                 input.val("");
                             }
                         }
@@ -215,6 +222,10 @@
             },
 
             round_end: function() {
+                var input = $('#input');
+                input.off('keyup');
+                input.blur();
+                input.hide();
                 this.game.state.start('category_state');
             },
 

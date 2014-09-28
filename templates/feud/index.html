@@ -188,7 +188,7 @@
                 this.x_clock_old = this.game.world.centerX - 80;
                 this.x_clock = this.game.world.centerX;
                 this.y_clock = this.game.world.centerY - 165;
-                this.text = "Hello World";
+                this.text = "";
                 this.style = { font: "65px Bazar", align: "center"};
                 this.time_field = this.game.add.text(this.x_clock, this.y_clock, this.text, this.style);
                 this.time_field.anchor.setTo(0.5, 0.5);
@@ -203,7 +203,10 @@
                     this.start_round();
                     return;
                 }
-                var countdown_text = second.toString();
+                if (second == 0)
+                    var countdown_text = "GO!";
+                else
+                    var countdown_text = second.toString();
                 var countdown_field = this.game.add.text(this.game.world.centerX, 0, countdown_text, this.countdown_style);
                 countdown_field.anchor.setTo(0.5, 0.5);
                 var tween_countdown = this.add.tween(countdown_field);
@@ -233,7 +236,7 @@
                 input.off('keyup');
                 input.blur();
                 input.hide();
-                this.game.state.start('category_state');
+                this.game.state.start('leaderboard_state');
             },
 
             render: function() {
@@ -260,11 +263,76 @@
             }
         }
 
+        var leaderboard_state = {
+
+            init: function(score) {
+                this.score = score;
+            },
+
+            preload: function() {
+                this.game.load.image('leaderboard_banner', '{% static 'assets/leaderboard_banner.png' %}');
+                this.game.load.image('mustache', '{% static 'assets/mustache_for_leaderboard.png' %}');
+                this.game.load.image('main_menu_button', '{% static 'assets/main_menu_button.png' %}')
+            },
+
+            create: function() {
+                this.game.stage.backgroundColor = "#66bda6";
+                var bazar_style = { font: "65px Bazar", fill: "#fff", align: "center"};
+                var x_middle = this.game.world.centerX;
+                var y_middle = this.game.world.centerY;
+
+                var mustache = this.game.add.sprite(x_middle, y_middle, 'mustache');
+                var leaderboard_banner = this.game.add.sprite(x_middle, 150, 'leaderboard_banner');
+                var main_menu_button = this.game.add.button(x_middle, 900, 'main_menu_button', this.main_menu_click, this);
+
+                leaderboard_banner.anchor.setTo(0.5, 0.5);
+                mustache.anchor.setTo(0.5, 0.5);
+                main_menu_button.anchor.setTo(0.5, 0.5);
+
+                var score_one_name = "1. TLDR"
+                var score_two_name = "2. ABC"
+                var score_three_name = "3. AAA"
+                var player_name = "4. YOU"
+
+                var score_one_points = "9001";
+                var score_two_points = "4329";
+                var score_three_points = "3221";
+                var player_points = this.score;
+
+                var score_one_name_field = this.game.add.text(x_middle - 250, 375, score_one_name, bazar_style);
+                var score_two_name_field = this.game.add.text(x_middle - 250, 475, score_two_name, bazar_style);
+                var score_three_name_field = this.game.add.text(x_middle - 250, 575, score_three_name, bazar_style);
+                var player_name_field = this.game.add.text(x_middle - 250, 675, player_name, bazar_style);
+
+                var score_one_points_field = this.game.add.text(x_middle + 150, 375, score_one_points, bazar_style);
+                var score_two_points_field = this.game.add.text(x_middle + 150, 475, score_two_points, bazar_style);
+                var score_three_points_field = this.game.add.text(x_middle + 150, 575, score_three_points, bazar_style);
+                var player_points_field = this.game.add.text(x_middle + 150, 675, player_points, bazar_style);
+
+                score_one_name_field.anchor.setTo(0, 0.5);
+                score_two_name_field.anchor.setTo(0, 0.5);
+                score_three_name_field.anchor.setTo(0, 0.5);
+                player_name_field.anchor.setTo(0, 0.5);
+
+                score_one_points_field.anchor.setTo(0, 0.5);
+                score_two_points_field.anchor.setTo(0, 0.5);
+                score_three_points_field.anchor.setTo(0, 0.5);
+                player_points_field.anchor.setTo(0, 0.5);
+
+            },
+
+            main_menu_click: function(){
+                click_sound.play('', 0, 1, false);
+                this.game.state.start('category_state');
+            },
+        }
+
         var game = new Phaser.Game(1680, 1050, Phaser.AUTO, 'screen');
 
         game.state.add('menu_state', menu_state);
         game.state.add('category_state', category_state);
         game.state.add('game_state', game_state);
+        game.state.add('leaderboard_state', leaderboard_state);
         game.state.start('menu_state');
     </script>
 </html>

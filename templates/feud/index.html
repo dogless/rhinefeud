@@ -117,6 +117,7 @@
                 this.game.load.image('banner', '{% static 'assets/banner.png'%}');
                 this.game.load.image('scoreboard', '{% static 'assets/scorebox.png' %}');
                 this.game.load.image('incorrectxmark', '{% static 'assets/incorrectxmark.png' %}');
+                this.game.load.image('wow_answer', '{% static 'assets/wow.png' %}');
             },
 
             create: function() {
@@ -277,6 +278,7 @@
                         }
                         if (score > 30){
                             state.wow.play('', 0, 1, false);
+                            state.pop_up('wow_answer');
                         }
                         else{
                             state.correct.play('', 0, 1, false);

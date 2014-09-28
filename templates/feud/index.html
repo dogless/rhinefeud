@@ -64,9 +64,12 @@
                 this.game.load.spritesheet('farm', '{% static 'assets/farm_ss.png' %}', 626, 76);
                 this.game.load.spritesheet('wall_street', '{% static 'assets/wallstreet_ss.png' %}', 626, 78);
                 this.game.load.spritesheet('superheroes', '{% static 'assets/superhero.png' %}', 626, 78);
+                this.game.load.audio('lobby', '{% static 'assets/lobby.mp3' %}');
             },
             
             create: function(){
+                this.music = game.add.audio('lobby');
+                this.music.play('', 0, 1, false);
                 var single_player = this.game.add.sprite(-100, 301, 'single_player');
                 this.add.tween(single_player).to({x: 220, y: 301}, 1000, Phaser.Easing.Bounce.Out, true, 0, false);
 
@@ -97,6 +100,7 @@
 
             category_click: function(category){
                 click_sound.play('', 0, 1, false);
+                this.music.stop();
                 this.game.state.start('game_state', true, false, category);
             }
         };

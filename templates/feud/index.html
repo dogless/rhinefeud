@@ -133,16 +133,19 @@
                 tween_input_box.to({x: 350, y: 905}, 1000, Phaser.Easing.Bounce.Out, false, 600);
 
                 this.num_answers = 0;
-                const max_answers = 9;
+                var MAX_ANSWERS = 9;
                 var state = this;
                 tween_input_box.onComplete.add(function () {
                     var input = $('#input');
                     input.show();
                     input.keyup(function (event) {
-                        if (event.which === "\r".charCodeAt() && input.val().length) {
-                            state.game.add.text(104, 312 + state.num_answers * 56, input.val().toUpperCase(), {font: "50px Bazar"});
-                            ++state.num_answers;
-                            input.val("");
+                        if (event.which === "\r".charCodeAt()) {
+                            var val = input.val();
+                            if (val.length){
+                                state.game.add.text(104, 312 + state.num_answers * 56, val.toUpperCase(), {font: "50px Bazar"});
+                                ++state.num_answers;
+                                input.val("");
+                            }
                         }
                     });
                 });

@@ -31,9 +31,9 @@
         var click_sound;
         var menu_state = {
             preload: function(){
+                this.game.load.audio('sfx', '{% static 'assets/click.wav' %}');
                 this.game.load.image('home_character', '{% static 'assets/homepagealfred.png' %}');
                 this.game.load.spritesheet('start_button', '{% static 'assets/playbox.png' %}', 334, 154);
-                this.game.load.audio('sfx', '{% static 'assets/click.wav' %}');
             },
 
             create: function(){
@@ -107,11 +107,12 @@
             },
 
             preload: function() {
+                this.game.load.audio('wow', '{% static 'assets/wow.mp3' %}');
+                this.game.load.audio('sfx', '{% static 'assets/countdown.mp3' %}');
                 this.game.load.image('alfred', '{% static 'assets/alfredwithtextbubble.png' %}');
                 this.game.load.image('input_box', '{% static 'assets/typeinbox.png' %}');
                 this.game.load.image('banner', '{% static 'assets/banner.png'%}');
                 this.game.load.image('scoreboard', '{% static 'assets/scorebox.png' %}');
-                this.game.load.audio('sfx', '{% static 'assets/countdown.mp3' %}');
             },
 
             create: function() {
@@ -124,6 +125,8 @@
             },
 
             start_round: function() {
+                var wow = game.add.audio('wow');
+                wow.play('', 0, 1, false);
                 var x_middle = this.game.width/2;
                 var y_middle = this.game.length/2;
                 var banner = this.game.add.sprite(x_middle, 115, 'banner');
@@ -310,12 +313,17 @@
                 var y_middle = this.game.world.centerY;
 
                 var mustache = this.game.add.sprite(x_middle, y_middle, 'mustache');
-                var leaderboard_banner = this.game.add.sprite(x_middle, 150, 'leaderboard_banner');
-                var main_menu_button = this.game.add.button(x_middle, 900, 'main_menu_button', this.main_menu_click, this);
+                var leaderboard_banner = this.game.add.sprite(x_middle, 0, 'leaderboard_banner');
+                var main_menu_button = this.game.add.button(x_middle, 1200, 'main_menu_button', this.main_menu_click, this);
 
                 leaderboard_banner.anchor.setTo(0.5, 0.5);
                 mustache.anchor.setTo(0.5, 0.5);
                 main_menu_button.anchor.setTo(0.5, 0.5);
+
+                // leaderboard banner animation
+                var tween_leaderboard = this.add.tween(leaderboard_banner);
+                tween_leaderboard.to({x: x_middle , y: 175}, 600, Phaser.Easing.Cubic.Out);
+                tween_leaderboard.start();
 
                 var score_one_name = "1. TLDR"
                 var score_two_name = "2. ABC"
@@ -327,15 +335,15 @@
                 var score_three_points = "3221";
                 var player_points = this.score;
 
-                var score_one_name_field = this.game.add.text(x_middle - 250, 375, score_one_name, bazar_style);
-                var score_two_name_field = this.game.add.text(x_middle - 250, 475, score_two_name, bazar_style);
-                var score_three_name_field = this.game.add.text(x_middle - 250, 575, score_three_name, bazar_style);
-                var player_name_field = this.game.add.text(x_middle - 250, 675, player_name, bazar_style);
+                var score_one_name_field = this.game.add.text(x_middle - 50, 375, score_one_name, bazar_style);
+                var score_two_name_field = this.game.add.text(x_middle - 50, 475, score_two_name, bazar_style);
+                var score_three_name_field = this.game.add.text(x_middle - 50, 575, score_three_name, bazar_style);
+                var player_name_field = this.game.add.text(x_middle - 50, 675, player_name, bazar_style);
 
-                var score_one_points_field = this.game.add.text(x_middle + 150, 375, score_one_points, bazar_style);
-                var score_two_points_field = this.game.add.text(x_middle + 150, 475, score_two_points, bazar_style);
-                var score_three_points_field = this.game.add.text(x_middle + 150, 575, score_three_points, bazar_style);
-                var player_points_field = this.game.add.text(x_middle + 150, 675, player_points, bazar_style);
+                var score_one_points_field = this.game.add.text(x_middle + 350, 375, score_one_points, bazar_style);
+                var score_two_points_field = this.game.add.text(x_middle + 350, 475, score_two_points, bazar_style);
+                var score_three_points_field = this.game.add.text(x_middle + 350, 575, score_three_points, bazar_style);
+                var player_points_field = this.game.add.text(x_middle + 350, 675, player_points, bazar_style);
 
                 score_one_name_field.anchor.setTo(0, 0.5);
                 score_two_name_field.anchor.setTo(0, 0.5);
@@ -346,6 +354,43 @@
                 score_two_points_field.anchor.setTo(0, 0.5);
                 score_three_points_field.anchor.setTo(0, 0.5);
                 player_points_field.anchor.setTo(0, 0.5);
+
+                var tween_score_one_name = this.add.tween(score_one_name_field);
+                var tween_score_two_name = this.add.tween(score_two_name_field);
+                var tween_score_three_name = this.add.tween(score_three_name_field);
+                var tween_player_name = this.add.tween(player_name_field);
+                var tween_score_one_points = this.add.tween(score_one_points_field);
+                var tween_score_two_points = this.add.tween(score_two_points_field);
+                var tween_score_three_points = this.add.tween(score_three_points_field);
+                var tween_player_points = this.add.tween(player_points_field);
+                var tween_main_menu = this.add.tween(main_menu_button);
+
+                tween_score_one_name.to({x: x_middle - 250 , y: 375}, 600, Phaser.Easing.Bounce.Out);
+                tween_score_one_name.start();
+
+                tween_score_two_name.to({x: x_middle - 250 , y: 475}, 600, Phaser.Easing.Bounce.Out, false, 50);
+                tween_score_two_name.start();
+
+                tween_score_three_name.to({x: x_middle - 250 , y: 575}, 600, Phaser.Easing.Bounce.Out, false, 100);
+                tween_score_three_name.start();
+
+                tween_player_name.to({x: x_middle - 250 , y: 675}, 600, Phaser.Easing.Bounce.Out, false, 150);
+                tween_player_name.start();
+
+                tween_score_one_points.to({x: x_middle + 150 , y: 375}, 600, Phaser.Easing.Bounce.Out);
+                tween_score_one_points.start();
+
+                tween_score_two_points.to({x: x_middle + 150 , y: 475}, 600, Phaser.Easing.Bounce.Out, false, 50);
+                tween_score_two_points.start();
+
+                tween_score_three_points.to({x: x_middle + 150 , y: 575}, 600, Phaser.Easing.Bounce.Out, false, 100);
+                tween_score_three_points.start();
+
+                tween_player_points.to({x: x_middle - 250 , y: 675}, 600, Phaser.Easing.Bounce.Out, false, 150);
+                tween_player_points.start();
+
+                tween_main_menu.to({x: x_middle, y: 900}, 600, Phaser.Easing.Cubic.Out);
+                tween_main_menu.start();
 
             },
 

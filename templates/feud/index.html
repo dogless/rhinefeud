@@ -106,11 +106,13 @@
                 this.game.load.image('alfred', '{% static 'assets/alfredwithtextbubble.png' %}');
                 this.game.load.image('input_box', '{% static 'assets/typeinbox.png' %}');
                 this.game.load.image('banner', '{% static 'assets/banner.png'%}');
+                this.game.load.image('scoreboard', '{% static 'assets/scorebox.png' %}');
             },
 
             create: function() {
                 this.countdown = true;
-                this.round_time = 25000;
+                this.round_time = 26000;
+                this.countdown_style = {font : "200px Bazar"};
                 this.countdown_timer(3);
             },
 
@@ -120,6 +122,7 @@
                 var banner = this.game.add.sprite(x_middle, 115, 'banner');
                 var alfred = this.game.add.sprite(x_middle + 500, 1000, 'alfred');
                 var input_box = this.game.add.sprite(-320, 905, 'input_box');
+                var scoreboard = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY + 25, 'scoreboard');
                 
                 // category title setup
                 var category_text = this.category.toUpperCase();
@@ -130,6 +133,7 @@
                 banner.anchor.setTo(0.5, 0.5);
                 alfred.anchor.setTo(0.5, 0.5);
                 input_box.anchor.setTo(0.5, 0.5);
+                scoreboard.anchor.setTo(0.5, 0.5);
 
                 // animation setup
                 var tween_alfred = this.add.tween(alfred);
@@ -168,17 +172,17 @@
 
                 // timer setup
                 this.x_clock_old = this.game.world.centerX - 80;
-                this.x_clock = this.game.world.centerX - 30;
-                this.y_clock = this.game.world.centerY - 200;
+                this.x_clock = this.game.world.centerX;
+                this.y_clock = this.game.world.centerY - 165;
                 this.text = "Hello World";
                 this.style = { font: "65px Bazar", align: "center"};
                 this.time_field = this.game.add.text(this.x_clock, this.y_clock, this.text, this.style);
+                this.time_field.anchor.setTo(0.5, 0.5);
                 this.start_timer();
             },
 
             countdown_timer: function(second) {
                 var second = parseInt(second);
-                var countdown_style = { font: "200px Bazar"};
                 var state = this;
                 if (second == -1) {
                     this.countdown = false;
@@ -186,9 +190,7 @@
                     return;
                 }
                 var countdown_text = second.toString();
-                console.log(second);
-                var countdown_field = this.game.add.text(this.game.world.centerX, 0, countdown_text, countdown_style);
-
+                var countdown_field = this.game.add.text(this.game.world.centerX, 0, countdown_text, this.countdown_style);
                 countdown_field.anchor.setTo(0.5, 0.5);
                 var tween_countdown = this.add.tween(countdown_field);
                 tween_countdown.to({x: this.game.world.centerX , y: this.game.world.centerY}, 1000, Phaser.Easing.Bounce.Out);
@@ -197,13 +199,6 @@
                     state.game.world.remove(countdown_field);
                     state.countdown_timer(second - 1);
                 });
-
-
-                // this.time_field = this.game.add.text(this.game.width/2, this.game.length/2, countdown_text, countdown_style);
-                // // this.game.time.events.add(Phaser.Timer.SECOND * 3, this.start_round, this);
-                // this.timer = game.time.create(false);
-                // this.timer.start(3000);
-
             },
 
             // game timer
@@ -229,10 +224,10 @@
                     
                     var time = parseInt(this.timer.duration / 1000);
                     
-                    if (time < 10) {
-                        time = (this.timer.duration/ 1000).toFixed(1);
-                        this.time_field.x = this.x_clock - 20;
-                    }
+                    // if (time < 10) {
+                    //     time = (this.timer.duration/ 1000).toFixed(1);
+                    //     this.time_field.x = this.x_clock - 20;
+                    // }
 
                     this.time_field.text = time;
                 }

@@ -108,6 +108,9 @@
 
             preload: function() {
                 this.game.load.audio('wow', '{% static 'assets/wow.mp3' %}');
+                this.game.load.audio('music', '{% static 'assets/music.mp3' %}');
+                this.game.load.audio('incorrect', '{% static 'assets/incorrect.mp3' %}');
+                this.game.load.audio('correct', '{% static 'assets/correct.mp3' %}');
                 this.game.load.audio('sfx', '{% static 'assets/countdown.mp3' %}');
                 this.game.load.image('alfred', '{% static 'assets/alfredwithtextbubble.png' %}');
                 this.game.load.image('input_box', '{% static 'assets/typeinbox.png' %}');
@@ -117,6 +120,10 @@
 
             create: function() {
                 var countdown_sound = game.add.audio('sfx');
+                this.wow = game.add.audio('wow');
+                this.correct = game.add.audio('correct');
+                this.music = game.add.audio('music');
+                this.incorrect = game.add.audio('incorrect');
                 countdown_sound.play('', 0, 1, false);
                 this.countdown = true;
                 this.round_time = 26000;
@@ -125,8 +132,7 @@
             },
 
             start_round: function() {
-                var wow = game.add.audio('wow');
-                wow.play('', 0, 1, false);
+                this.music.play('', 0, 0.3, false);
                 var x_middle = this.game.width/2;
                 var y_middle = this.game.length/2;
                 var banner = this.game.add.sprite(x_middle, 115, 'banner');
@@ -163,13 +169,16 @@
                 tween_input_box.onComplete.add(function () {
                     var input = $('#input');
                     input.show();
-					input.focus();
+		            input.focus();
                     input.keyup(function (event) {
                         if (event.which === "\r".charCodeAt()) {
                             var val = sanitize(input.val());
                             if (val.length && !(val in state.answer_set)) {
                                 state.answer_set[val] = true;
                                 state.test(state.category, val);
+                            }
+                            else{
+                                state.incorrect.play('', 0, 1, false);
                             }
                             input.val("");
                         }
@@ -233,6 +242,7 @@
                 input.off('keyup');
                 input.blur();
                 input.hide();
+                this.music.stop();
                 this.game.state.start('leaderboard_state', true, false);
             },
 
@@ -257,9 +267,16 @@
                 $.getJSON('/score', {'category': category, 'word':word},
                     function(result){
                         var score = 41 - (Math.floor(result['distance']) - 1);
+                        console.log(score);
                         if (score < 1 || score > 40) {
-                            console.log("Fail");
+                            state.incorrect.play('', 0, 1, false);
                             return;
+                        }
+                        if (score > 30){
+                            state.wow.play('', 0, 1, false);
+                        }
+                        else{
+                            state.correct.play('', 0, 1, false);
                         }
 
                         var point_x = 670;
@@ -304,6 +321,7 @@
                 this.game.load.image('leaderboard_banner', '{% static 'assets/leaderboard_banner.png' %}');
                 this.game.load.image('mustache', '{% static 'assets/mustache_for_leaderboard.png' %}');
                 this.game.load.image('main_menu_button', '{% static 'assets/main_menu_button.png' %}')
+                this.game.load.spritesheet('main_menu_button', '{% static 'assets/mainmenubuttonhover.1.png' %}', 334, 110);
             },
 
             create: function() {
@@ -314,7 +332,7 @@
 
                 var mustache = this.game.add.sprite(x_middle, y_middle, 'mustache');
                 var leaderboard_banner = this.game.add.sprite(x_middle, 0, 'leaderboard_banner');
-                var main_menu_button = this.game.add.button(x_middle, 1200, 'main_menu_button', this.main_menu_click, this);
+                var main_menu_button = this.game.add.button(x_middle, 1200, 'main_menu_button', this.main_menu_click, this, 0, 1);
 
                 leaderboard_banner.anchor.setTo(0.5, 0.5);
                 mustache.anchor.setTo(0.5, 0.5);
@@ -386,7 +404,7 @@
                 tween_score_three_points.to({x: x_middle + 150 , y: 575}, 600, Phaser.Easing.Bounce.Out, false, 100);
                 tween_score_three_points.start();
 
-                tween_player_points.to({x: x_middle - 250 , y: 675}, 600, Phaser.Easing.Bounce.Out, false, 150);
+                tween_player_points.to({x: x_middle + 150 , y: 675}, 600, Phaser.Easing.Bounce.Out, false, 150);
                 tween_player_points.start();
 
                 tween_main_menu.to({x: x_middle, y: 900}, 600, Phaser.Easing.Cubic.Out);

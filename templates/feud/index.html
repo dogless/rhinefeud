@@ -31,9 +31,9 @@
         var click_sound;
         var menu_state = {
             preload: function(){
+                this.game.load.audio('sfx', '{% static 'assets/click.wav' %}');
                 this.game.load.image('home_character', '{% static 'assets/homepagealfred.png' %}');
                 this.game.load.spritesheet('start_button', '{% static 'assets/playbox.png' %}', 334, 154);
-                this.game.load.audio('sfx', '{% static 'assets/click.wav' %}');
             },
 
             create: function(){
@@ -107,11 +107,12 @@
             },
 
             preload: function() {
+                this.game.load.audio('wow', '{% static 'assets/wow.mp3' %}');
+                this.game.load.audio('sfx', '{% static 'assets/countdown.mp3' %}');
                 this.game.load.image('alfred', '{% static 'assets/alfredwithtextbubble.png' %}');
                 this.game.load.image('input_box', '{% static 'assets/typeinbox.png' %}');
                 this.game.load.image('banner', '{% static 'assets/banner.png'%}');
                 this.game.load.image('scoreboard', '{% static 'assets/scorebox.png' %}');
-                this.game.load.audio('sfx', '{% static 'assets/countdown.mp3' %}');
             },
 
             create: function() {
@@ -124,6 +125,8 @@
             },
 
             start_round: function() {
+                var wow = game.add.audio('wow');
+                wow.play('', 0, 1, false);
                 var x_middle = this.game.width/2;
                 var y_middle = this.game.length/2;
                 var banner = this.game.add.sprite(x_middle, 115, 'banner');

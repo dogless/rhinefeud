@@ -250,16 +250,35 @@
                 $.getJSON('/score', {'category': category, 'word':word},
                     function(result){
                         var score = 41 - (Math.floor(result['distance']) - 1);
-                        if (score < 1 || score > 40) console.log("Fail");
+                        if (score < 1 || score > 40) {
+                            console.log("Fail");
+                            return;
+                        }
 
+                        var point_x = 670;
                         var num_visible_answers = state.answer_lines.length;
+                        var scoreString = String(score);
                         if (num_visible_answers < MAX_VISIBLE_ANSWERS) {
-                            state.answer_lines.push(state.game.add.text(104, 312 + num_visible_answers * 56, word, {font: "50px Bazar"}));
+                            var word_x = 104;
+                            var y = 312 + num_visible_answers * 56;
+                            var word_line = state.game.add.text(word_x, y, word, {font: "50px Bazar"});
+                            state.answer_lines.push({
+                                word_line: word_line,
+                                point_line: state.game.add.text(point_x - word_line.context.measureText(scoreString).width, y,
+                                    scoreString, {font: "50px Bazar", align: "right"})});
                         } else {
                             for (var i = 0; i < MAX_VISIBLE_ANSWERS - 1; ++i) {
-                                state.answer_lines[i].text = state.answer_lines[i + 1].text;
+                                var answer_line = state.answer_lines[i];
+                                answer_line.word_line.text = state.answer_lines[i + 1].word_line.text;
+                                answer_line.point_line.text = state.answer_lines[i + 1].point_line.text;
+                                answer_line.point_line.x = state.answer_lines[i + 1].point_line.x;
+                                answer_line.point_line.updateText();
                             }
-                            state.answer_lines[MAX_VISIBLE_ANSWERS - 1].text = val;
+                            var answer_line = state.answer_lines[MAX_VISIBLE_ANSWERS - 1];
+                            answer_line.word_line.text = word;
+                            answer_line.point_line.text = scoreString;
+                            answer_line.point_line.x = point_x - answer_line.point_line.context.measureText(scoreString).width;
+                            answer_line.point_line.updateText();
                         }
                     }
                 );

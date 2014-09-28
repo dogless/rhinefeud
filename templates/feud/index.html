@@ -28,13 +28,16 @@
             return answer.trim().replace(/\s+/g, " ").toUpperCase();
         }
 
+        var click_sound;
         var menu_state = {
             preload: function(){
                 this.game.load.image('home_character', '{% static 'assets/homepagealfred.png' %}');
                 this.game.load.spritesheet('start_button', '{% static 'assets/playbox.png' %}', 334, 154);
+                this.game.load.audio('sfx', '{% static 'assets/click.wav' %}');
             },
 
             create: function(){
+                click_sound = game.add.audio('sfx');
                 var home_character = this.game.add.sprite(this.game.width/2, 420, 'home_character');
                 home_character.anchor.setTo(0.5, 0.5);
                 var start_button = this.game.add.button(this.game.width/2, 930, 'start_button', this.startClick, this, 0, 1);
@@ -43,6 +46,7 @@
             },
 
             startClick: function(){
+                click_sound.play('', 0, 1, false);
                 this.game.state.start('category_state');
             },
 
@@ -91,6 +95,7 @@
             },
 
             category_click: function(category){
+                click_sound.play('', 0, 1, false);
                 this.game.state.start('game_state', true, false, category);
             }
         };

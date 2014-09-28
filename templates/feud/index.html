@@ -315,7 +315,10 @@
                             state.flip(answer_line.point_line);
                         }
                     }
-                );
+                ).error(function(){
+                    state.incorrect.play('', 0, 1, false);
+                    state.pop_up('incorrectxmark');
+                });
             },
 
             flip: function (sprite) {

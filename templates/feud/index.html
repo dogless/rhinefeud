@@ -268,7 +268,7 @@
                 var MAX_VISIBLE_ANSWERS = 9;
                 $.getJSON('/score', {'category': category, 'word':word},
                     function(result){
-                        var score = 41 - (Math.floor(result['distance']) - 1);
+                        var score = isNaN(result.distance) ? 0 : 41 - (Math.floor(result.distance) - 1);
                         console.log(score);
                         if (score < 1 || score > 40) {
                             state.incorrect.play('', 0, 1, false);

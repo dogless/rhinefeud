@@ -170,8 +170,8 @@
                             if (val.length && !(val in state.answer_set)) {
                                 state.answer_set[val] = true;
                                 state.test(state.category, val);
-                                input.val("");
                             }
+                            input.val("");
                         }
                     });
                 });

@@ -180,6 +180,7 @@
                             }
                             else{
                                 state.incorrect.play('', 0, 1, false);
+                                state.pop_up('incorrectxmark');
                             }
                             input.val("");
                         }
@@ -271,18 +272,7 @@
                         console.log(score);
                         if (score < 1 || score > 40) {
                             state.incorrect.play('', 0, 1, false);
-
-                            var wrong = state.game.add.sprite(state.game.world.centerX, state.game.world.centerY, 'incorrectxmark');
-                            wrong.anchor.setTo(0.5, 0.5);
-                            var wrong_appear = state.add.tween(wrong);
-                            wrong_appear.from({alpha: 0}, 500);
-                            var wrong_disappear = state.add.tween(wrong);
-                            wrong_disappear.to({alpha: 0}, 1000);
-                            wrong_disappear.onComplete.add(function () {
-                                wrong.destroy();
-                            });
-                            wrong_appear.chain(wrong_disappear).start();
-
+                            state.pop_up('incorrectxmark');
                             return;
                         }
                         if (score > 30){
@@ -321,6 +311,19 @@
                         }
                     }
                 );
+            },
+
+            pop_up: function (sprite_name) {
+                var sprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, sprite_name);
+                sprite.anchor.setTo(0.5, 0.5);
+                var sprite_appear = this.add.tween(sprite);
+                sprite_appear.from({alpha: 0}, 500);
+                var sprite_disappear = this.add.tween(sprite);
+                sprite_disappear.to({alpha: 0}, 1000);
+                sprite_disappear.onComplete.add(function () {
+                    sprite.destroy();
+                });
+                sprite_appear.chain(sprite_disappear).start();
             }
         }
 

@@ -24,6 +24,10 @@
     <script>
         'use strict';
 
+        function sanitize(answer) {
+            return answer.trim().replace(/\s+/g, " ").toUpperCase();
+        }
+
         var menu_state = {
             preload: function(){
                 this.game.load.image('home_character', '{% static 'assets/homepagealfred.png' %}');
@@ -148,7 +152,7 @@
 					input.focus();
                     input.keyup(function (event) {
                         if (event.which === "\r".charCodeAt()) {
-                            var val = input.val().toUpperCase();
+                            var val = sanitize(input.val());
                             if (val.length && !(val in answer_set)) {
                                 answer_set[val] = true;
                                 state.game.add.text(104, 312 + num_answers * 56, val, {font: "50px Bazar"});

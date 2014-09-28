@@ -183,6 +183,10 @@
                 this.time_field = this.game.add.text(this.x_clock, this.y_clock, this.text, this.style);
                 this.time_field.anchor.setTo(0.5, 0.5);
                 this.start_timer();
+
+                this.score = 0;
+                this.scoreboard_field = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 50, "0", this.style);
+                this.scoreboard_field.anchor.setTo(0.5, 0.5);
             },
 
             countdown_timer: function(second) {
@@ -226,7 +230,7 @@
                 input.off('keyup');
                 input.blur();
                 input.hide();
-                this.game.state.start('leaderboard_state');
+                this.game.state.start('leaderboard_state', true, false);
             },
 
             render: function() {
@@ -257,6 +261,8 @@
 
                         var point_x = 670;
                         var num_visible_answers = state.answer_lines.length;
+                        state.score += score;
+                        state.scoreboard_field.text = String(state.score);
                         var scoreString = String(score);
                         if (num_visible_answers < MAX_VISIBLE_ANSWERS) {
                             var word_x = 104;

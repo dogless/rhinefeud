@@ -6,6 +6,47 @@
             Feud
         </title>
         <script type="text/javascript" src="{% static "js/phaser.min.js" %}"></script>
+        <script>
+            function load_assets(load) {
+                // Start screen
+                load.audio('sfx', '{% static 'assets/click.wav' %}');
+                load.image('home_character', '{% static 'assets/homepagealfred.png' %}');
+                load.spritesheet('start_button', '{% static 'assets/playbox.png' %}', 334, 154);
+
+                // Menu screen
+                load.image('select_game_mode', '{% static 'assets/selectagamemode.png' %}');
+                load.image('single_player', '{% static 'assets/singleplayer.png' %}');
+                load.image('multiplayer', '{% static 'assets/multiplayer.png' %}');
+                load.image('select_category', '{% static 'assets/selectacategory.png' %}');
+                load.image('bar', '{% static 'assets/yellowverticalbar.png' %}');
+                load.spritesheet('pop_music', '{% static 'assets/popmusic_ss.png' %}', 626, 78);
+                load.spritesheet('farm', '{% static 'assets/farm_ss.png' %}', 626, 76);
+                load.spritesheet('wall_street', '{% static 'assets/wallstreet_ss.png' %}', 626, 78);
+                load.spritesheet('superheroes', '{% static 'assets/superhero.png' %}', 626, 78);
+                load.audio('lobby', '{% static 'assets/lobby.mp3' %}');
+                load.spritesheet('chips', '{% static 'assets/chipshover.1.png' %}', 626, 78);
+
+                // Game screen
+                load.audio('wow', '{% static 'assets/wow.mp3' %}');
+                load.audio('music', '{% static 'assets/music.mp3' %}');
+                load.audio('bell', '{% static 'assets/bellsound.mp3' %}');
+                load.audio('incorrect', '{% static 'assets/incorrect.mp3' %}');
+                load.audio('correct', '{% static 'assets/correct.mp3' %}');
+                load.audio('sfx', '{% static 'assets/countdown.mp3' %}');
+                load.image('alfred', '{% static 'assets/alfredwithtextbubble.png' %}');
+                load.image('input_box', '{% static 'assets/typeinbox.png' %}');
+                load.image('banner', '{% static 'assets/banner.png'%}');
+                load.image('scoreboard', '{% static 'assets/scorebox.png' %}');
+                load.image('incorrectxmark', '{% static 'assets/incorrectxmark.png' %}');
+                load.image('wow_answer', '{% static 'assets/wow.png' %}');
+
+                // Leaderboard
+                load.image('leaderboard_banner', '{% static 'assets/leaderboard_banner.png' %}');
+                load.image('mustache', '{% static 'assets/mustache_for_leaderboard.png' %}');
+                load.image('main_menu_button', '{% static 'assets/main_menu_button.png' %}')
+                load.spritesheet('main_menu_button', '{% static 'assets/mainmenubuttonhover.1.png' %}', 334, 110);
+            }
+        </script>
         <script type="text/javascript" src="{% static "js/jquery-2.1.1.min.js" %}"></script>
         <style>
             @font-face {
@@ -39,10 +80,8 @@
 
         var click_sound;
         var menu_state = {
-            preload: function(){
-                this.game.load.audio('sfx', '{% static 'assets/click.wav' %}');
-                this.game.load.image('home_character', '{% static 'assets/homepagealfred.png' %}');
-                this.game.load.spritesheet('start_button', '{% static 'assets/playbox.png' %}', 334, 154);
+            preload: function() {
+                load_assets(this.game.load);
             },
 
             create: function(){
@@ -62,20 +101,6 @@
         };
 
         var category_state = {
-            preload: function(){
-                this.game.load.image('select_game_mode', '{% static 'assets/selectagamemode.png' %}');
-                this.game.load.image('single_player', '{% static 'assets/singleplayer.png' %}');
-                this.game.load.image('multiplayer', '{% static 'assets/multiplayer.png' %}');
-                this.game.load.image('select_category', '{% static 'assets/selectacategory.png' %}');
-                this.game.load.image('bar', '{% static 'assets/yellowverticalbar.png' %}');
-                this.game.load.spritesheet('pop_music', '{% static 'assets/popmusic_ss.png' %}', 626, 78);
-                this.game.load.spritesheet('farm', '{% static 'assets/farm_ss.png' %}', 626, 76);
-                this.game.load.spritesheet('wall_street', '{% static 'assets/wallstreet_ss.png' %}', 626, 78);
-                this.game.load.spritesheet('superheroes', '{% static 'assets/superhero.png' %}', 626, 78);
-                this.game.load.audio('lobby', '{% static 'assets/lobby.mp3' %}');
-                this.game.load.spritesheet('chips', '{% static 'assets/chipshover.1.png' %}', 626, 78);
-            },
-            
             create: function(){
                 this.music = game.add.audio('lobby');
                 this.music.play('', 0, 1, false);
@@ -121,21 +146,6 @@
             
             init: function(category) {
                 this.category = category;
-            },
-
-            preload: function() {
-                this.game.load.audio('wow', '{% static 'assets/wow.mp3' %}');
-                this.game.load.audio('music', '{% static 'assets/music.mp3' %}');
-                this.game.load.audio('bell', '{% static 'assets/bellsound.mp3' %}');
-                this.game.load.audio('incorrect', '{% static 'assets/incorrect.mp3' %}');
-                this.game.load.audio('correct', '{% static 'assets/correct.mp3' %}');
-                this.game.load.audio('sfx', '{% static 'assets/countdown.mp3' %}');
-                this.game.load.image('alfred', '{% static 'assets/alfredwithtextbubble.png' %}');
-                this.game.load.image('input_box', '{% static 'assets/typeinbox.png' %}');
-                this.game.load.image('banner', '{% static 'assets/banner.png'%}');
-                this.game.load.image('scoreboard', '{% static 'assets/scorebox.png' %}');
-                this.game.load.image('incorrectxmark', '{% static 'assets/incorrectxmark.png' %}');
-                this.game.load.image('wow_answer', '{% static 'assets/wow.png' %}');
             },
 
             create: function() {
@@ -369,10 +379,6 @@
             },
 
             preload: function() {
-                this.game.load.image('leaderboard_banner', '{% static 'assets/leaderboard_banner.png' %}');
-                this.game.load.image('mustache', '{% static 'assets/mustache_for_leaderboard.png' %}');
-                this.game.load.image('main_menu_button', '{% static 'assets/main_menu_button.png' %}')
-                this.game.load.spritesheet('main_menu_button', '{% static 'assets/mainmenubuttonhover.1.png' %}', 334, 110);
             },
 
             create: function() {
@@ -475,6 +481,7 @@
         game.state.add('category_state', category_state);
         game.state.add('game_state', game_state);
         game.state.add('leaderboard_state', leaderboard_state);
+
         game.state.start('menu_state');
         });
     </script>

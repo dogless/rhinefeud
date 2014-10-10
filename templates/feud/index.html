@@ -264,6 +264,7 @@
                 input.off('keyup');
                 input.blur();
                 input.hide();
+                input.val("");
                 this.music.stop();
                 this.bell.play('', 0, 1, false);
                 this.game.state.start('leaderboard_state', true, false, this.score);

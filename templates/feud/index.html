@@ -194,7 +194,7 @@
                     input.keyup(function (event) {
                         if (event.which === "\r".charCodeAt()) {
                             var val = sanitize(input.val());
-                            if (val.length && !(val in state.answer_set)) {
+                            if (val.length && val.indexOf(",") == -1  &&  !(val in state.answer_set)) {
                                 state.answer_set[val] = true;
                                 state.test(state.category, val);
                             }
